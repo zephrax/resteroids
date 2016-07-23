@@ -1,0 +1,32 @@
+{
+  "name": "resteroids",
+  "version": "1.0.0-alpha.1",
+  "description": "REST on Steroids - NodeJS API Server Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zephrax/resteroids.git"
+  },
+  "keywords": [
+    "resteroids",
+    "rest",
+    "api",
+    "nodejs",
+    "server",
+    "restify"
+  ],
+  "author": "zephrax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zephrax/resteroids/issues"
+  },
+  "homepage": "https://github.com/zephrax/resteroids#readme",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "glob": "^7.0.5",
+    "minimist": "^1.2.0"
+  }
+}
