@@ -15,14 +15,15 @@ class CommandNew extends Command {
     this.name = 'new';
   }
 
-  handler(params) {
+  handler() {
     const source = path.resolve(`${__dirname}../../../blueprints/app`);
     const target = path.resolve(this._args._[0] ? this._args._[0] : process.cwd());
 
-    debug(source);
-    debug(target);
+    debug(`Blueprint source directory: ${source}`);
+    debug(`Target directory: ${target}`);
 
     fs.copy(source, target, (err, results) => {
+      debug(results);
       this.output('Project bootstraped');
     });
   }
