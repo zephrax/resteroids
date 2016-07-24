@@ -2,22 +2,16 @@
 'use strict';
 
 const parseArgs = require('minimist');
+const Commander = require('../lib/cli/commander');
 
 let args = parseArgs(process.argv.slice(2));
 
-console.log(args);
+const options = {
+  baseDir : `${__dirname}/commands/`,
+  args : args
+};
 
-class PepeError extends Error {
-  constructor(message) {
-    super();
+let commandCenter = new Commander(options);
+commandCenter.loadCommands();
+commandCenter.handler();
 
-    this.code = 'PepeError';
-    this.message = message;
-  }
-}
-
-try {
-  throw new PepeError('Josecito');
-} catch (e) {
-  console.log(e);
-}
