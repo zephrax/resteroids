@@ -1,24 +1,26 @@
 'use strict';
 
-const restifyOAuth2 = require('restify-oauth2');
-const hooks = require('./hooks');
+const oauthserver = require('oauth2-server');
 const config = require('../../config');
 const restify = require('restify');
 
 const oauth2Helper = {
 
   setup : (server) => {
-    restifyOAuth2.cc(server, { tokenEndpoint: config.tokenEndPoint, hooks: hooks });
+    const oauthModel = require('./model');
+    
+    server.oauth = oauthserver({
+      model: oauthModel,
+      grants: [ 'password', 'client_credentials' ],
+      debug: true
+    });
   },
 
   middleware : (req, res, next) => {
-    if (!req.user) {
-      next(new restify.errors.ForbiddenError('Access denied'));
-    } else {
-      next();
-    }
+    server.oauth.authorise(req, res, next);
   }
 
 };
 
 module.exports = oauth2Helper;
+
