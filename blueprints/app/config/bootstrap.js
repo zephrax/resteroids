@@ -20,8 +20,9 @@ function bootstrap(server) {
 
   server.use(restify.acceptParser(server.acceptable));
   server.use(restify.authorizationParser());
+  //server.use(restify.urlEncodedBodyParser({ mapParams: false }));
   server.use(restify.queryParser());
-  server.use(restify.bodyParser());
+  server.use(restify.bodyParser({ mapParams: false }));
   cors.setup(server);
 
   server.use(restifyValidation.validationPlugin( {
@@ -36,6 +37,10 @@ function bootstrap(server) {
   server.use(restify.CORS());
   oauth2.setup(server);
   routes.setup(server);
+
+  server.on('uncaughtException', function(req, res, route, err) {
+    console.log(err.stack);
+  });
 }
 
 module.exports = bootstrap;

@@ -1,6 +1,6 @@
 'use strict';
 
-const oauthserver = require('oauth2-server');
+const oauthserver = require('@npmcorp/oauth2-server');
 const config = require('../../config');
 const restify = require('restify');
 
@@ -9,10 +9,8 @@ const oauth2Helper = {
   setup : (server) => {
     const oauthModel = require('./model');
     
-    server.oauth = oauthserver({
-      model: oauthModel,
-      grants: [ 'password', 'client_credentials' ],
-      debug: true
+    server.oauth = new oauthserver({
+      model: oauthModel
     });
   },
 
