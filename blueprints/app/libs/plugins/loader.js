@@ -21,6 +21,10 @@ class PluginLoader {
     }
 
     this._options = options;
+    this._options.server.use((req,res,next) => {
+      console.log('en el loader');
+      next();
+    });
 
     this._plugins = {};
   }
@@ -40,16 +44,35 @@ class PluginLoader {
   }
 
   bootstrapBefore() {
-    Promise.each(Object.keys(this._plugins), (item, index) => {
-      debug(`boostrapBefore ${item}...`);
-      return this._plugins[item].bootstrapBefore();
+    return Promise.each(Object.keys(this._plugins), (item, index) => {
+      if (this._plugins[item].bootstrapBefore) {
+        debug(`boostrapBefore ${item}...`);
+        return this._plugins[item].bootstrapBefore();
+      } else {
+        return Promise.resolve();
+      }
     });
   }
 
   bootstrapAfter() {
-    Promise.each(Object.keys(this._plugins), (item, index) => {
-      debug(`boostrapAfter ${item}...`);
-      return this._plugins[item].bootstrapAfter();
+    return Promise.each(Object.keys(this._plugins), (item, index) => {
+      if (this._plugins[item].bootstrapAfter) {
+        debug(`boostrapAfter ${item}...`);
+        return this._plugins[item].bootstrapAfter();
+      } else {
+        return Promise.resolve();
+      }
+    });
+  }
+
+  routeMiddleware() {
+    var self = this;
+    
+    Object.keys(this._plugins).forEach((item) => {
+      if (this._plugins[item].routeMiddleware) {
+        debug(`routeMiddleware ${item}...`);
+        this._plugins[item].routeMiddleware(self._options.server);
+      }
     });
   }
 }

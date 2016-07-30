@@ -49,10 +49,15 @@ function bootstrap(server) {
   models.setup();
   server.use(restify.CORS());
   //oauth2.setup(server);
-  
-  pluginLoader.bootstrapAfter();
+  pluginLoader.routeMiddleware();
+  server.use((req,res,next) => {
+    console.log('alallaa');
+    next();
+  });
 
   routes.setup(server);
+
+  pluginLoader.bootstrapAfter();
 
   server.on('uncaughtException', function(req, res, route, err) {
     console.log(err.stack);
