@@ -1,8 +1,6 @@
 'use strict';
 
 const oauthserver = require('@npmcorp/oauth2-server');
-const config = require('../../config');
-const restify = require('restify');
 
 const oauth2Helper = {
 
@@ -14,7 +12,7 @@ const oauth2Helper = {
     });
   },
 
-  middleware : (req, res, next) => {
+  middleware : (server, req, res, next) => {
     server.oauth.authorise(req, res, next);
   }
 

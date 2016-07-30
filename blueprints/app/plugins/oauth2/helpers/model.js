@@ -8,14 +8,19 @@ const debug = require('debug')('oauth2:model');
 
 let model = {
 
-  getAccessToken: function (bearerToken) {
-    debug(`getAccessToken ${bearertoken}`);
-    return OAuthToken.findOne({ accessToken: bearerToken });
+  getAccessToken: function(bearerToken) {
+    debug(`getAccessToken ${bearerToken}`);
+    return OAuthToken.findOne({
+      accessToken: bearerToken
+    });
   },
 
-  getClient: function (clientId, clientSecret) {
+  getClient: function(clientId, clientSecret) {
     debug(`getClient ${clientId}:${clientSecret}`);
-    OAuthClient.findOne({ clientId: clientId, clientSecret: clientSecret }).then((a) => {
+    OAuthClient.findOne({
+      clientId: clientId,
+      clientSecret: clientSecret
+    }).then((a) => {
       debug('-- LALA --');
       debug(a);
       debug('-- LALA --');
@@ -23,30 +28,44 @@ let model = {
       debug(err);
     });
 
-    return OAuthClient.findOne({ clientId: clientId, clientSecret: clientSecret });
+    return OAuthClient.findOne({
+      clientId: clientId,
+      clientSecret: clientSecret
+    });
   },
 
-  getUserFromClient: function (client) {
+  getUserFromClient: function(client) {
     debug(`getUserFromClient ${client.clientId}:${client.clientSecret}`);
-    OAuthClient.findOne({ clientId: client.clientId, clientSecret: client.clientSecret }).then((a) => {
+    OAuthClient.findOne({
+      clientId: client.clientId,
+      clientSecret: client.clientSecret
+    }).then((a) => {
       debug(a);
     }).catch((err) => {
       debug(err);
     });
-    return OAuthClient.findOne({ clientId: client.clientId, clientSecret: client.clientSecret });
+    return OAuthClient.findOne({
+      clientId: client.clientId,
+      clientSecret: client.clientSecret
+    });
   },
 
-  getUser: function (email, password) {
+  getUser: function(email, password) {
     debug(`getUser ${email}:${password}`);
-    return User.findOne({ email: email, password: password  });
+    return User.findOne({
+      email: email,
+      password: password
+    });
   },
 
-  getRefreshToken: function (refreshToken) {
+  getRefreshToken: function(refreshToken) {
     debug(`getRefreshToken ${refreshToken}`);
-    return OAuthToken.findOne({ refreshToken: refreshToken  });
+    return OAuthToken.findOne({
+      refreshToken: refreshToken
+    });
   },
 
-  saveToken: function (token, client, user) {
+  saveToken: function(token, client, user) {
     debug(`saveToken ${token} ${client} ${user}`);
     console.log(token);
 
@@ -56,11 +75,11 @@ let model = {
       clientId: client.id,
       refreshToken: token.refreshToken,
       refreshTokenExpiresOn: token.refreshTokenExpiresOn,
-      userId: user.id                           
+      userId: user.id
     });
 
     return accessToken.save()
-      .then((result) => {
+      .then(() => {
         return Promise.resolve({
           accessToken: token.accessToken,
           user: client,

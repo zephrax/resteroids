@@ -1,7 +1,7 @@
 'use strict';
 
 const BaseController = require('../controllers/base.controller');
-const oauth2 = require('../helpers/oauth2');
+//const oauth2 = require('../helpers/oauth2');
 
 function routes(server) {
   var thisController = new BaseController();
@@ -10,9 +10,9 @@ function routes(server) {
     thisController.handler(req, res, next);
   });
 
-  server.get('/secure', oauth2.middleware, (req, res, next) => {
-    thisController.secureHandler(req, res, next);
-  });
+  //server.get('/secure', oauth2.middleware, (req, res, next) => {
+  //  thisController.secureHandler(req, res, next);
+  //});
 }
 
 module.exports = routes;
