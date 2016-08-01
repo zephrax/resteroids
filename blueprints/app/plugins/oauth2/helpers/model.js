@@ -30,16 +30,6 @@ let model = {
 
   getClient: function(clientId, clientSecret) {
     debug(`getClient ${clientId}:${clientSecret}`);
-    OAuthClient.findOne({
-      clientId: clientId,
-      clientSecret: clientSecret
-    }).then((a) => {
-      debug('-- LALA --');
-      debug(a);
-      debug('-- LALA --');
-    }).catch((err) => {
-      debug(err);
-    });
 
     return OAuthClient.findOne({
       clientId: clientId,
@@ -49,6 +39,7 @@ let model = {
 
   getUserFromClient: function(client) {
     debug(`getUserFromClient ${client.clientId}:${client.clientSecret}`);
+
     OAuthClient.findOne({
       clientId: client.clientId,
       clientSecret: client.clientSecret
@@ -65,6 +56,7 @@ let model = {
 
   getUser: function(email, password) {
     debug(`getUser ${email}:${password}`);
+
     return User.findOne({
       email: email,
       password: password

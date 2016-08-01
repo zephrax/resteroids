@@ -19,7 +19,7 @@ const oauth2Helper = {
     server.use((req, res, next) => {
       debug('oauth middleware');
       let ignore_urls = config.ignore_urls;
-      ignore_urls.push('/auth/login');
+      ignore_urls.push(config.auth_url);
       if (ignore_urls.indexOf(req.path()) > -1) {
         return next();
       }
