@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId; 
 const OAuthClient = mongoose.model('OAuthClient');
 const OAuthToken = mongoose.model('OAuthToken');
 const User = mongoose.model('User');
@@ -12,7 +13,19 @@ let model = {
     debug(`getAccessToken ${bearerToken}`);
     return OAuthToken.findOne({
       accessToken: bearerToken
-    });
+    })
+      .then((bearerToken) => {
+        return OAuthClient.findOne({
+          _id: new ObjectId(bearerToken.clientId)
+        });
+      }).then((user) => {
+        let response = {
+          accessToken: bearerToken,
+          user: user
+        };
+
+        return response;
+      });
   },
 
   getClient: function(clientId, clientSecret) {
@@ -97,4 +110,3 @@ let model = {
 };
 
 module.exports = model;
-

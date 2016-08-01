@@ -2,12 +2,8 @@
 
 const OAuth2Config = {
 
-  bootstrap : {
-    before: null,
-    after: ''
-  },
-
-  middleware: null
+  ignore_urls: [
+  ]
 
 };
 

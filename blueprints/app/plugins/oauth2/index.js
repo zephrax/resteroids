@@ -6,19 +6,16 @@ let Plugin = require('../../libs/plugin');
 const oauth2Helper = require('./helpers/');
 
 const debug = require('debug')('oauth2plugin');
+const routes = require('./routes/auth.route');
 
 class OAuth2Plugin extends Plugin {
 
   constructor(options) {
     super(options);
-
-    this._options.server.use((req,res,next) => {
-      console.log('en el plugin1');
-      next();
-    });
   }
 
   bootstrapBefore() {
+    routes(this._options.server);
     oauth2Helper.setup(this._options.server); 
     return Promise.resolve();
   }
@@ -27,7 +24,7 @@ class OAuth2Plugin extends Plugin {
     return Promise.resolve();
   }
 
-  routeMiddleware(server) {
+  routeMiddleware() {
     debug('Setting up middleware');
     oauth2Helper.middleware(this._options.server);
   }
