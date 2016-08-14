@@ -2,17 +2,17 @@
 
 let defaultConfig = {
   app: {
- 		title: 'RESTeroids dev',
- 		description: 'RESTeroids dev',
- 		keywords: 'RESTeroids dev'
- 	},
- 	port: process.env.PORT || 3000,
+    title: 'RESTeroids dev',
+    description: 'RESTeroids dev',
+    keywords: 'RESTeroids dev'
+  },
+  port: process.env.PORT || 3000,
   db: 'mongodb://localhost/resteroids-dev',
   auth: {
-    google : {
+    google: {
       client_id: 'GOOGLE_CLIENT_ID',
       client_secret: 'GOOGLE_CLIENT_SECRET',
-      redirect_uri : 'postmessage'
+      redirect_uri: 'postmessage'
     }
   }
 };
